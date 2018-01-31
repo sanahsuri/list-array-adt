@@ -1,0 +1,153 @@
+/***********************************************************************
+ * List Array
+ ***********************************************************************/
+
+ Test Plan:
+
+ I. Tests in test driver function:
+  (a) Test for size (testSize)
+  (b) Test for add (testAdd)
+  (c) Test for set (testSet)
+  (d) Test for get (testGet)
+  (e) Test for contains (testContains)
+
+II. Test for proper implementation of list array
+  (a) Test for doubling the array length every subsequent node and incrementing
+      size appropriately (testExpansion)
+
+III. Compiling with AddressSanitizer
+
+Test Cases:
+
+I. (a) - (e)
+
+    Expected Output: On running test_listarray, each test function should print
+    0 errors. Each test function also calls clear to free the space used in the
+    new lists made.
+
+    (a) In testSize, the proper incrementing of the size as new elements are added
+        to the list is checked along with a check for the function set not changing
+        the size of the list
+
+    (b) In testAdd, using a for loop, adding new items to one node is first tested.
+        Then, adding another item to yield a new node is tested with proper change
+        in size and length.
+
+    (c) In testSet, using a for loop along with the function get, the value of the
+        previous and newly set item is tested for correctness. It is also tested that
+        size of list remains unchanged when set is called.
+
+    (d) In testGet, using a for loop each value is checked at every index in a list
+        for correctness.
+
+    (e) In testContains, even numbers are added to a list of three nodes using a for
+        loop. Then, there are two tests which check for 'true' if the item entered is
+        an even number between 0 and 7 * CAPACITY and then check for 'false' if the item
+        entered is an odd number.
+
+    Actual Run:
+
+    Script started on Wed Nov 29 21:40:39 2017
+    bash-3.2$ make test_listarray
+    clang -ansi -g -Wall -std=gnu99  -c test_listarray.c
+    clang -ansi -g -Wall -std=gnu99 -c listarray.c
+    clang  -o test_listarray test_listarray.o listarray.o
+    bash-3.2$ ./test_listarray
+    --EXAMPLE TEST--
+    Done: errors = 0
+    --BASIC TESTS--
+    Done: errors = 0
+    --TEST FOR SIZE--
+    Done: errors = 0
+    --TEST FOR ADD--
+    Done: errors = 0
+    --TEST FOR SET--
+    Done: errors = 0
+    --TEST FOR GET--
+    Done: errors = 0
+    --TEST FOR CONTAINS--
+    Done: errors = 0
+    --TEST FOR LIST EXPANSION--
+    Done: errors = 0
+    bash-3.2$ exit
+    exit
+
+II. (a)
+
+    Expected Output: On running test_listarray, the testExpansion function should print
+    0 errors. In testExpansion, the proper doubling of the array length in each subsequent
+    node is tested. Also, the proper incrementing of size is tested.
+
+    Actual Run:
+
+    Script started on Wed Nov 29 21:40:39 2017
+    bash-3.2$ make test_listarray
+    clang -ansi -g -Wall -std=gnu99  -c test_listarray.c
+    clang -ansi -g -Wall -std=gnu99 -c listarray.c
+    clang  -o test_listarray test_listarray.o listarray.o
+    bash-3.2$ ./test_listarray
+    --EXAMPLE TEST--
+    Done: errors = 0
+    --BASIC TESTS--
+    Done: errors = 0
+    --TEST FOR SIZE--
+    Done: errors = 0
+    --TEST FOR ADD--
+    Done: errors = 0
+    --TEST FOR SET--
+    Done: errors = 0
+    --TEST FOR GET--
+    Done: errors = 0
+    --TEST FOR CONTAINS--
+    Done: errors = 0
+    --TEST FOR LIST EXPANSION--
+    Done: errors = 0
+    bash-3.2$ exit
+    exit
+
+    Script done on Wed Nov 29 21:40:59 2017
+
+III. Compiling and running with AddressSanitizer
+
+      Expected Output: Clean report from AddressSanitizer with proper flags
+
+      Actual Run:
+
+      Script started on Wed Nov 29 21:45:52 2017
+      make CFLAGS=-fsanitize=address
+      clang -ansi -g -Wall -std=gnu99 -fsanitize=address -c test_listarray.c
+      clang -ansi -g -Wall -std=gnu99 -c listarray.c
+      clang -fsanitize=address -o test_listarray test_listarray.o listarray.o
+      bash-3.2$ ./test_listarray
+      --EXAMPLE TEST--
+      Done: errors = 0
+      --BASIC TESTS--
+      Done: errors = 0
+      --TEST FOR SIZE--
+      Done: errors = 0
+      --TEST FOR ADD--
+      Done: errors = 0
+      --TEST FOR SET--
+      Done: errors = 0
+      --TEST FOR GET--
+      Done: errors = 0
+      --TEST FOR CONTAINS--
+      Done: errors = 0
+      --TEST FOR LIST EXPANSION--
+      Done: errors = 0
+      bash-3.2$ exit
+      exit
+
+      Script done on Wed Nov 29 21:46:05 2017
+
+
+Conclusion Statement: The program successfully builds a dynamic list which a variable
+array length. Space is allocated for a list, node and array when a list is initialized.
+Space is also allocated when a new node is added. When malloc is called, the program
+checks if space can in fact be allocated. All this space is successfully freed using
+the clear function. This is tested using AddressSanitizer. The function get_ptr returns
+a valid address or returns NULL and gets a pointer to the last node. The rest of the
+functions meet their postconditions as well and have assertions that verify the
+preconditions. The test functions in the test driver file check for proper expansion of
+the list and test each function call. Finally, the Makefile compiles and links the files
+appropriately and runs AddressSanitizer when need be.
